@@ -5,8 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\eShopSolution.ViewModels\eShopSolution.ViewModels.csproj" />
     <ProjectReference Include="..\eShopSolutionUtilities\eShopSolutionUtilities.csproj" />
     <ProjectReference Include="C:\Users\hiepv\Downloads\eShopSolution-feature-aspnetcore_identity_database\eShopSolution.Data\eShopSolution.Data.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Catalog\Products\Dtos\" />
+  </ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
 </Project>
