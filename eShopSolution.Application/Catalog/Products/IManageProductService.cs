@@ -1,12 +1,12 @@
 ﻿using eShopSolution.Application.Catalog.Products.Dtos;
 using eShopSolution.ViewModels.Catalog.Common;
 using eShopSolution.ViewModels.Catalog.Products.Manage;
-using eShopSolution.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 
 namespace eShopSolution.Application.Catalog.Products
 {
@@ -23,5 +23,7 @@ namespace eShopSolution.Application.Catalog.Products
         Task<int> RemoveImages(int imageId);
         Task<int> UpdateImages(int imageId, ProductImageUpdateRequest request);
         Task<List<ProductImageViewModel>> GetListImage(int productId);
+        Task<ProductViewModel> GetById(int productId, string languageId);
+        Task<ProductImageViewModel> GetImageById(int imageId);
     }
 }

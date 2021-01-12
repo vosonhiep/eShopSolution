@@ -15,4 +15,8 @@
     <ProjectReference Include="C:\Users\hiepv\Downloads\eShopSolution-feature-aspnetcore_identity_database\eShopSolution.Data\eShopSolution.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\user-content\" />
+  </ItemGroup>
+
 </Project>
