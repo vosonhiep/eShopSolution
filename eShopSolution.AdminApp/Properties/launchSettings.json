@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51325",
-      "sslPort": 44393
+      "applicationUrl": "http://localhost:50198",
+      "sslPort": 44324
     }
   },
   "profiles": {
@@ -15,11 +15,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "eShopSolution.BeckendApi": {
+    "eShopSolution.AdminApp": {
       "commandName": "Project",
-      "launchBrowser": false,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5001",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:5002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
