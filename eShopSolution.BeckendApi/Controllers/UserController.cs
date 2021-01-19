@@ -41,5 +41,13 @@ namespace eShopSolution.BeckendApi.Controllers
             }
             return Ok();
         }
+
+        //https://localhost/api/user/paging?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
+        {
+            var product = await _userService.GetUsersPaging(request);
+            return Ok(product);
+        }
     }
 }
