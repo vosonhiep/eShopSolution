@@ -13,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.BeckendApi.System.Users
+namespace eShopSolution.Application.System.Users
 {
     public class UserService : IUserService
     {
