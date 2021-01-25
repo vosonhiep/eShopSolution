@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using eShopSolution.ViewModels.Catalog.ProductImages;
+using eShopSolution.ViewModels.Catalog.Products.Public;
 
 namespace eShopSolution.Application.Catalog.Products
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         Task<int> Create(ProductCreateRequest request);
         Task<int> Update(ProductUpdateRequest request);
@@ -25,5 +26,8 @@ namespace eShopSolution.Application.Catalog.Products
         Task<List<ProductImageViewModel>> GetListImage(int productId);
         Task<ProductViewModel> GetById(int productId, string languageId);
         Task<ProductImageViewModel> GetImageById(int imageId);
+
+        public Task<PageResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
+        Task<List<ProductViewModel>> GetAll(string languageId);
     }
 }

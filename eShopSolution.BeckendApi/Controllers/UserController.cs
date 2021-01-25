@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using eShopSolution.BeckendApi.System.Users;
+using eShopSolution.Application.System.Users;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace eShopSolution.BeckendApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -40,6 +42,14 @@ namespace eShopSolution.BeckendApi.Controllers
                 return BadRequest("Register is unsuccessful");
             }
             return Ok();
+        }
+
+        //https://localhost/api/user/paging?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
+        {
+            var product = await _userService.GetUsersPaging(request);
+            return Ok(product);
         }
     }
 }
