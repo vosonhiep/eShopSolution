@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace eShopSolution.BeckendApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

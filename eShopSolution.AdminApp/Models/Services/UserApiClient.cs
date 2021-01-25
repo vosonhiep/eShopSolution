@@ -14,18 +14,18 @@ namespace eShopSolution.AdminApp.Models.Services
 {
     public class UserApiClient : IUserApiClient
     {
-        private readonly IHttpClientFactory _httpClentFactory;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         public UserApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
-            _httpClentFactory = httpClientFactory;
+            _httpClientFactory = httpClientFactory;
             _configuration = configuration;
         }
         public async Task<string> Authenticate(LoginRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var client = _httpClentFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var response = await client.PostAsync("/api/user/authenticate", httpContent);
             var token = await response.Content.ReadAsStringAsync();
@@ -36,10 +36,10 @@ namespace eShopSolution.AdminApp.Models.Services
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var client = _httpClentFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.BearerToken);
-            var response = await client.GetAsync($"/api/users/paging?pageIndex=" 
+            var response = await client.GetAsync($"/api/user/paging?pageIndex=" 
                  + $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
             var body = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<PageResult<UserViewModel>>(body);
@@ -48,12 +48,12 @@ namespace eShopSolution.AdminApp.Models.Services
 
         public async Task<bool> RegisterUser(RegisterRequest registerRequest)
         {
-            var client = _httpClentFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             var json = JsonConvert.SerializeObject(registerRequest);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync($"/api/user", httpContent);
+            var response = await client.PostAsync($"/api/user/register", httpContent);
             return response.IsSuccessStatusCode;
         }
     }
