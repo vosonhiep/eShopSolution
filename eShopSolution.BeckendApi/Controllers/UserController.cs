@@ -51,7 +51,7 @@ namespace eShopSolution.BeckendApi.Controllers
         }
 
         //http://localhost/api/user/id
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -62,7 +62,7 @@ namespace eShopSolution.BeckendApi.Controllers
             {
                 return BadRequest(result);
             }
-            return Ok();
+            return Ok(result);
         }
 
         //https://localhost/api/user/paging?pageIndex=1&pageSize=10&keyword=
@@ -78,6 +78,20 @@ namespace eShopSolution.BeckendApi.Controllers
         {
             var user = await _userService.GetById(id);
             return Ok(user);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.Delete(id);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok();
         }
     }
 }

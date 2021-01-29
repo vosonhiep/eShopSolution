@@ -38,7 +38,8 @@ namespace eShopSolution.AdminApp.Controllers
                 PageSize = pageSize
             };
             var data = await _userApiClient.GetUsersPaging(request);
-            return View(data);
+            ViewBag.Keyword = keyword;
+            return View(data.ResultObj);
         }
 
         //[HttpGet]
@@ -55,10 +56,15 @@ namespace eShopSolution.AdminApp.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Token");
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("Index", "Login");
         }
 
-    
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var result = await _userApiClient.GetById(id);
+            return View(result.ResultObj);
+        }
 
         [HttpGet]
         public IActionResult Create()
@@ -114,6 +120,31 @@ namespace eShopSolution.AdminApp.Controllers
 
             var result = await _userApiClient.UpdateUser(request.Id, request);
             if(result.IsSuccessed)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", result.Message);
+            return View(request);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(Guid id)
+        {
+            return View(new UserDeleteRequest()
+            {
+                Id = id
+            });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UserDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(ModelState);
+
+            var result = await _userApiClient.DeleteUser(request.Id);
+            if (result.IsSuccessed)
             {
                 return RedirectToAction("Index");
             }
