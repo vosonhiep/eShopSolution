@@ -28,5 +28,6 @@ namespace eShopSolution.ViewModels.System.Users
         public DateTime Dob { get; set; }
 
         public IList<string> Roles { get; set; }
+        public RoleAssignRequest RoleAssign { get; set; }
     }
 }
