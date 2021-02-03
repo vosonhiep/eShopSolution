@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Controllers.Components
+namespace eShopSolution.AdminApp.Controllers.Components.Navigation
 {
     public class PagerViewComponent : ViewComponent
     {
