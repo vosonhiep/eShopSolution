@@ -1,4 +1,4 @@
-﻿using eShopSolution.Application.Catalog.Products.Dtos;
+﻿using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.Common;
 using eShopSolution.ViewModels.Catalog.Products.Manage;
 using Microsoft.AspNetCore.Http;
@@ -30,8 +30,9 @@ namespace eShopSolution.AdminApp.Models.Services
 
         public async Task<PageResult<ProductViewModel>> GetPaging(GetManageProductPagingRequest request)
         {
-            var data = await GetAsync<PageResult<ProductViewModel>>($"/api/product/paging?pagiIndex={request.PageIndex}"
-                + $"&pageSize={request.PageSize}" + $"&keyword={request.Keyword}&languageId={request.LanguageId}");
+            var data = await GetAsync<PageResult<ProductViewModel>>($"/api/product/paging?pageIndex={request.PageIndex}"
+                + $"&pageSize={request.PageSize}" 
+                + $"&keyword={request.Keyword}&languageId={request.LanguageId}&categoryId={request.CategoryIds}");
 
             return data;
         }

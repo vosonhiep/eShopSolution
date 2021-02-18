@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using static eShopSolutionUtilities.Constants.SystemConstants;
 
 namespace eShopSolution.AdminApp.Models.Services
 {
@@ -41,6 +42,23 @@ namespace eShopSolution.AdminApp.Models.Services
                 return myDeserializaedObjList;
             }
             return JsonConvert.DeserializeObject<TResponse>(body);
+        }
+
+        public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString(AppSettings.Token);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var data = (List<T>)JsonConvert.DeserializeObject(body, typeof(List<T>));
+                return data;
+            }
+            throw new Exception(body);
         }
     }
 }

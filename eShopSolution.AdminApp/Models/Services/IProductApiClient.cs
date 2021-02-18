@@ -1,4 +1,4 @@
-﻿using eShopSolution.Application.Catalog.Products.Dtos;
+﻿using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.Common;
 using eShopSolution.ViewModels.Catalog.Products.Manage;
 using System;
