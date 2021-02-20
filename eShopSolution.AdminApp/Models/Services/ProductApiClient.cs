@@ -11,6 +11,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using static eShopSolutionUtilities.Constants.SystemConstants;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace eShopSolution.AdminApp.Models.Services
 {
@@ -77,5 +79,49 @@ namespace eShopSolution.AdminApp.Models.Services
             var response = await client.PostAsync($"/api/product/", requestContent);
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/product/{id}/categories", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+            }
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+
+        }
+
+        public async Task<ProductViewModel> GetById(int id, string languageId)
+        {
+            var data = await GetAsync<ProductViewModel>($"/api/product/{id}/{languageId}");
+
+            return data;
+        }
+
+        //public Task<ApiResult<ProductViewModel>> GetById(Guid id, string languageId)
+        //{
+        //    var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+        //    var client = _httpClientFactory.CreateClient();
+        //    client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+        //    var response = await client.GetAsync($"/api/product?productId={id}");
+        //    var body = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        return JsonConvert.DeserializeObject<ApiSuccessResult<UserViewModel>>(body);
+        //    }
+        //    return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>(body);
+        //}
+
+
     }
 }
