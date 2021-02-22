@@ -100,6 +100,7 @@ namespace eShopSolution.AdminApp.Models.Services
 
         }
 
+        // Get product by id
         public async Task<ProductViewModel> GetById(int id, string languageId)
         {
             var data = await GetAsync<ProductViewModel>($"/api/product/{id}/{languageId}");

@@ -134,10 +134,12 @@ namespace eShopSolution.Application.Catalog.Products
             //1. Select join
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic     //left join
                         from pic in ppic.DefaultIfEmpty()
-                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc               //left join
                         from c in picc.DefaultIfEmpty()
+                        //join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId into ctc
+                        //from ct in ctc.DefaultIfEmpty()
                         where pt.LanguageId == request.LanguageId
                         select new { p, pt, pic, c };
 
@@ -261,7 +263,8 @@ namespace eShopSolution.Application.Catalog.Products
         public async Task<ProductViewModel> GetById(int productId, string languageId)
         {
             var product = await _context.Products.FindAsync(productId);
-            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var productTranslation = await _context.ProductTranslations
+                                    .FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
 
             var categories = await (from c in _context.Categories
                                     join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
@@ -388,8 +391,8 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
         {
-            var user = await _context.Products.FindAsync(id);
-            if(user == null)
+            var product = await _context.Products.FindAsync(id);
+            if(product == null)
             {
                 return new ApiErrorResult<bool>($"Sản phẩm với {id} không tồn tại");
             }
@@ -411,6 +414,17 @@ namespace eShopSolution.Application.Catalog.Products
                     });
                 }
             }
+
+            //var addCategories = request.Categories.Where(x => x.Selected == true).ToList();
+            //foreach (var category in addCategories)
+            //{
+            //    var productInCategory = await _context.ProductInCategories.FindAsync(id, category.Id);
+            //    if(productInCategory == null)
+            //    {
+            //        await _context.ProductInCategories.AddAsync(productInCategory);
+            //    }
+            //}
+
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
         }

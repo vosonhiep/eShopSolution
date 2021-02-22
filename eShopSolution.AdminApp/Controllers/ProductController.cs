@@ -93,9 +93,31 @@ namespace eShopSolution.AdminApp.Controllers
             return View(roleAssignRequest);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
+
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
+
+            return View(roleAssignRequest);
+        }
+
         private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
         {
-            var languageId = HttpContext.Session.GetString(AppSettings.DefaultLanguageId);
+            var languageId = HttpContext.Session.GetString(AppSettings.DefaultLanguageId);      // Get language is using
 
             var productObj = await _productApiClient.GetById(id, languageId);
 
