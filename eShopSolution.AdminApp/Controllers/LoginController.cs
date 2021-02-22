@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using static eShopSolutionUtilities.Constants.SystemConstants;
 
 namespace eShopSolution.AdminApp.Controllers
 {
@@ -46,7 +47,6 @@ namespace eShopSolution.AdminApp.Controllers
             if (result.ResultObj == null)
             {
                 ModelState.AddModelError("", result.Message);
-                return View();
             }
             var userPricipal = this.ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties()
@@ -54,6 +54,7 @@ namespace eShopSolution.AdminApp.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = true
             };
+            HttpContext.Session.SetString(AppSettings.DefaultLanguageId, _configuration["DefaultLanguageId"]);
             HttpContext.Session.SetString("Token", result.ResultObj);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
