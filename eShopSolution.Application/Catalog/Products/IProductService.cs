@@ -1,4 +1,4 @@
-﻿using eShopSolution.Application.Catalog.Products.Dtos;
+﻿using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.Common;
 using eShopSolution.ViewModels.Catalog.Products.Manage;
 using Microsoft.AspNetCore.Http;
@@ -29,5 +29,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         public Task<PageResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
         Task<List<ProductViewModel>> GetAll(string languageId);
+
+        Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eShopSolution.Application.Catalog.Products.Dtos
+namespace eShopSolution.ViewModels.Catalog.Products
 {
     public class ProductViewModel
     {
@@ -20,5 +20,6 @@ namespace eShopSolution.Application.Catalog.Products.Dtos
 
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
+        public List<string> Categories { get; set; } = new List<string>();
     }
 }

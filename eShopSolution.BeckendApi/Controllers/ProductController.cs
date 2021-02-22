@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.ProductImages;
+using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.Products.Manage;
 using eShopSolution.ViewModels.Catalog.Products.Public;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,6 @@ namespace eShopSolution.BeckendApi.Controllers
 
             return Ok(product);
         }
-
 
         [HttpPost]
         [Consumes("multipart/form-data")]
@@ -157,7 +157,6 @@ namespace eShopSolution.BeckendApi.Controllers
             return Ok();
         }
 
-
         [HttpGet("{productId}/images/{imageId}")]
         public async Task<IActionResult>GetImageById(int productId, int imageId)
         {
@@ -167,5 +166,21 @@ namespace eShopSolution.BeckendApi.Controllers
             return Ok(image);
         }
 
+        [HttpPut("{id}/categories")]
+        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _productService.CategoryAssign(id, request);
+            if(!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
     }
 }

@@ -1,5 +1,5 @@
-﻿@using eShopSolution.ViewModels.Catalog.Common; 
-@model IEnumerable<eShopSolution.Application.Catalog.Products.Dtos.ProductViewModel>
+﻿@using eShopSolution.ViewModels.Catalog.Common;
+@model PageResult<eShopSolution.ViewModels.Catalog.Products.ProductViewModel>
 
 @{
     ViewData["Title"] = "Danh sách sản phẩm";
@@ -10,11 +10,9 @@
     <script>
         setTimeout(function () {
             $('#msgAlert').fadeOut('slow');
-        }, 200)
-
+        }, 2000);
     </script>
 }
-
 <div class="container-fluid">
     <h1 class="mt-4">Danh sách sản phẩm</h1>
     <ol class="breadcrumb mb-4">
@@ -30,22 +28,27 @@
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-4">
                                 <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                    <option>--Chọn danh mục--</option>
+                                </select>
                             </div>
                             <div class="cold-md-3">
                                 <button type="submit" class="btn btn-primary">Tìm</button>
-                                <button type="button" onclick="window.location.href='/Product/Index'" class="btn-dark">Reset</button>
+                                <button type="button" onclick="window.location.href='/Product/Index'" class="btn btn-dark">Reset</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        
+
         <div class="card-body">
             <div class="row">
-                @if (ViewBag.SuccessMsg! + null)
+                @if (ViewBag.SuccessMsg != null)
                 {
                     <div id="msgAlert" class="alert alert-success" role="alert">
                         @ViewBag.SuccessMsg
@@ -71,10 +74,12 @@
                             <th>
                                 Số lượng tồn
                             </th>
+
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Items)
                         {
                             <tr>
                                 <td>
@@ -96,7 +101,8 @@
                                 <td>
                                     @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
                                     @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Xoá", "Delete", new { id = item.Id })
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                    @Html.ActionLink("Gán danh mục","CategoryAssign", new {id = item.Id}) |
                                 </td>
                             </tr>
                         }
@@ -106,6 +112,4 @@
             @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
-
-   
 </div>
