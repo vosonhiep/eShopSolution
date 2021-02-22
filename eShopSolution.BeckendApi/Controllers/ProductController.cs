@@ -30,10 +30,10 @@ namespace eShopSolution.BeckendApi.Controllers
         //}
 
         // http:localhost:port/product?pageIndex=1&pageSize=10&CategoryId=2
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging(string languageId, [FromQuery] GetPublicProductPagingRequest request)
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {
-            var product = await _productService.GetAllByCategoryId(languageId, request);
+            var product = await _productService.GetAllPaging(request);
             return Ok(product);
         }
 
@@ -50,6 +50,7 @@ namespace eShopSolution.BeckendApi.Controllers
 
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
