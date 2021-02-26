@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using static eShopSolutionUtilities.Constants.SystemConstants;
 
-namespace eShopSolution.AdminApp.Models.Services
+namespace eShopSolution.ApiIntegration
 {
     public class BaseApiClient
     {
