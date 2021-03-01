@@ -30,7 +30,7 @@ namespace eShopSolution.ApiIntegration
 
         protected async Task<TResponse> GetAsync<TResponse>(string url)
         {
-            var session = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var session = _httpContextAccessor.HttpContext.Session.GetString(AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
