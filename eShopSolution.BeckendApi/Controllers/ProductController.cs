@@ -191,5 +191,12 @@ namespace eShopSolution.BeckendApi.Controllers
             var products = await _productService.GetFeaturedProducts(languageId, take);
             return Ok(products);
         }
+
+        public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+        {
+            var products = await _productService.GetLatestProducts(languageId, take);
+
+            return Ok(products);
+        }
     }
 }

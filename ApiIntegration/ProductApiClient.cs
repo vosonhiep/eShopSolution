@@ -114,6 +114,11 @@ namespace eShopSolution.ApiIntegration
             return data;
         }
 
+        public async Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take)
+        {
+            var data = await GetListAsync<ProductViewModel>($"/api/product/latest/{languageId}/{take}");
+            return data;
+        }
         //public Task<ApiResult<ProductViewModel>> GetById(Guid id, string languageId)
         //{
         //    var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
