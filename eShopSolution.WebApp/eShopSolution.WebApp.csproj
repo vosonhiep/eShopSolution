@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\Components\SideBar\" />
     <Folder Include="wwwroot\/themes\less\oregional\" />
   </ItemGroup>
 
