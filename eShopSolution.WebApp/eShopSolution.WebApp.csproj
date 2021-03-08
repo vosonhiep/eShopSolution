@@ -7,14 +7,15 @@
   <ItemGroup>
     <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.2" />
     <PackageReference Include="LazZiya.TagHelpers" Version="4.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\/themes\less\oregional\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ApiIntegration\eShopSolution.ApiIntegration.csproj" />
   </ItemGroup>
 
 </Project>
