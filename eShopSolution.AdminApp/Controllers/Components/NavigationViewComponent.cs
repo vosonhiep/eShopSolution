@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using static eShopSolutionUtilities.Constants.SystemConstants;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eShopSolution.AdminApp.Controllers.Components
 {
@@ -22,10 +23,18 @@ namespace eShopSolution.AdminApp.Controllers.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var languages = await _languageApiClient.GetAll();
+            var currentLanguageId = HttpContext.Session.GetString(AppSettings.DefaultLanguageId);
+            var items = languages.ResultObj.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = currentLanguageId == null ? x.IsDefault : currentLanguageId == x.Id.ToString()
+            });
+
             var navigationVm = new NavigationViewModel()
             {
-                CurrentLanguageId = HttpContext.Session.GetString(AppSettings.DefaultLanguageId),
-                Languages = languages.ResultObj
+                CurrentLanguageId = currentLanguageId,
+                Languages = items.ToList()
             };
             
             return View("Default", navigationVm);

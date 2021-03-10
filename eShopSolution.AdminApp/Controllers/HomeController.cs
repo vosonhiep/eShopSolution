@@ -43,7 +43,7 @@ namespace eShopSolution.AdminApp.Controllers
         {
             HttpContext.Session.SetString(AppSettings.DefaultLanguageId, viewModel.CurrentLanguageId);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(viewModel.ReturnUrl);
         }
     }
 }

@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\eShopSolution-develop\eShopSolution.Data\eShopSolution.Data.csproj" />
     <ProjectReference Include="..\eShopSolution.ViewModels\eShopSolution.ViewModels.csproj" />
     <ProjectReference Include="..\eShopSolutionUtilities\eShopSolutionUtilities.csproj" />
-    <ProjectReference Include="C:\Users\hiepv\Downloads\eShopSolution-feature-aspnetcore_identity_database\eShopSolution.Data\eShopSolution.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,6 +16,7 @@ using System.IO;
 using eShopSolution.Application.Common;
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products.Public;
+using eShopSolutionUtilities.Constants;
 
 namespace eShopSolution.Application.Catalog.Products
 {
@@ -30,6 +31,36 @@ namespace eShopSolution.Application.Catalog.Products
         }
         public async Task<int> Create(ProductCreateRequest request)
         {
+            var languages = _context.Languages;
+            var translations = new List<ProductTranslation>();
+
+            foreach (var language in languages)
+            {
+                if(language.Id == request.LanguageId)
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = request.Name,
+                        Description = request.Description,
+                        Details = request.Details,
+                        SeoDescription = request.SeoDescription,
+                        SeoAlias = request.SeoAlias,
+                        SeoTitle = request.SeoTitle,
+                        LanguageId = request.LanguageId
+                    });
+                }
+                else
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = SystemConstants.ProductConstant.NA,
+                        Description = SystemConstants.ProductConstant.NA,
+                        SeoAlias = SystemConstants.ProductConstant.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
+
             var product = new Product() 
             {
                 Price = request.Price,
@@ -110,7 +141,7 @@ namespace eShopSolution.Application.Catalog.Products
             productTranlations.Name = request.Name;
             productTranlations.SeoAlias = request.SeoAlias;
             productTranlations.SeoDescription = request.SeoDescription;
-            productTranlations.SeoTitle = request.Seotitle;
+            productTranlations.SeoTitle = request.SeoTitle;
             productTranlations.Description = request.Description;
             productTranlations.Details = request.Details;
 

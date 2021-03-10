@@ -31,6 +31,8 @@ namespace eShopSolution.ViewModels.Catalog.Products.Manage
         public string SeoTitle { get; set; }
         public string SeoAlias { get; set; }
         public string LanguageId { get; set; }
+
+        [Display(Name = "Ảnh sản phẩm")]
         public IFormFile ThumbnailImage { get; set; }
     }
 }
