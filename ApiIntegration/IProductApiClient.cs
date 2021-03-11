@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eShopSolution.ViewModels.Catalog.Categories;
 
 namespace eShopSolution.ApiIntegration
 {
@@ -19,5 +20,6 @@ namespace eShopSolution.ApiIntegration
         public Task<ProductViewModel> GetById(int id, string languageId);
         public Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take);
         public Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
+        public Task<CategoryVm> GetById(string languageId, int id);
     }
 }

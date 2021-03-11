@@ -44,14 +44,7 @@ namespace eShopSolution.AdminApp.Controllers
 
             var data = await _productApiClient.GetPaging(request);
             ViewBag.Keyword = keyword;
-            //var categories = await _categoryApiClient.GetAll(languageId);
-            //ViewBag.Categories = categories.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString(),
-            //    Selected = categoryId.HasValue && categoryId.Value == x.Id
-            //});
-
+           
             if (TempData["result"] != null)
             {
                 ViewBag.SuccessMsg = TempData["result"];

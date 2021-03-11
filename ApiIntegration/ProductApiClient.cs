@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using static eShopSolutionUtilities.Constants.SystemConstants;
 using Newtonsoft.Json;
 using System.Text;
+using eShopSolution.ViewModels.Catalog.Categories;
 
 namespace eShopSolution.ApiIntegration
 {
@@ -155,5 +156,9 @@ namespace eShopSolution.ApiIntegration
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<CategoryVm> GetById(string languageId, int id)
+        {
+            return await GetAsync<CategoryVm>($"/api/category/{id}/{languageId}");
+        }
     }
 }
